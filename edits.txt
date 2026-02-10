@@ -1,0 +1,7 @@
+what i should do to refactor:
+
+
+Wrap globals in cpu class
+and make the pipeline into cou methods
+
+introduce addressing mode helpers
