@@ -1,37 +1,35 @@
 #include "Bus.h"
-#include "Memory.h"
-#include "Device.h"
 #include <cstdio>
-#include <memory>
 
 
 
 int main (int argc, char *argv[]) {
-  
-  Device* hiRamPtr;
-  Device* loRamPtr;
-  Device* basicPtr;
-  Device* kernalPtr;
-  
-  Ram loRam(0xA000);
-  Ram hiRam(0x1000);
-
-  Rom basic(0x2000);
-  Rom kernal(0x2000);
-
-  hiRamPtr = &hiRam;
-  loRamPtr = &loRam;
-  basicPtr = &basic;
-  kernalPtr = &kernal;
-  
   Bus bus;
-
-  bus.Register(loRamPtr);
-  bus.Register(basicPtr);
-  bus.Register(hiRamPtr);
-  bus.Register(kernalPtr);
+  bus.defaults();
   
-  bus.write8(0xC000, 0x10);
+  if (argc > 3){
+    printf("Too many args\n");
+    return 1;
+  } else if (argc < 3){
+    printf("Too little args\n");
+    return 1;
+  } else if (argc == 3) {
+    bus.writeKernal(argv[1]);
+    bus.writeBasic(argv[2]);
+  }
+
+  bus.write8(0x0010, 0x10);
+  //bus.write8(0xB010, 0x11);
+  bus.write8(0xC010, 0x12);
+  bus.write8(0xD010, 0x13);
+  //bus.write8(0xE010, 0x14);
+
+  printf("%02X\n",bus.read8(0x0010));
+  printf("%02X\n",bus.read8(0xB010));
+  printf("%02X\n",bus.read8(0xC010));
+  printf("%02X\n",bus.read8(0xD010));
+  printf("%02X\n",bus.read8(0xE010));
+
   //printf("%i",bus.read8(0xC000));
 
   return 0;
