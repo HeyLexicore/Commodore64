@@ -1,6 +1,7 @@
 #include "Cpu.h"
 #include "Bus.h"
 #include <cstdint>
+#include "Opcodes.h"
 
 #define IMPLIED 0
 #define ACCUMULATOR 1
@@ -15,6 +16,7 @@
 #define XINDEXEDZEROPAGEINDIRECT 10
 #define ZEROPAGEINDIRECTYINDEXED 11
 #define RELATIVE 12
+
 
 
 Cpu::Cpu(Bus* bus): bus(bus) {};
@@ -63,3 +65,16 @@ uint8_t* Cpu::addrCallType(int type){ //returns a pointer to the actual thing to
 
   return nullptr;
 };
+
+
+void Cpu::setupOpcodes(){
+  for (int j = 0; j<56; j++){
+    for (int k = 0; k < 13; k++){
+      int val = rawTable[j][k];
+      if (val != -1){
+        opcodeCode[val] = j; opcodeMode[val] = k; opcodeMnem[val] = mnemonics[j];
+      }
+    }
+  }
+};
+

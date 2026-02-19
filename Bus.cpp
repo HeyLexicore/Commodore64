@@ -54,10 +54,12 @@ void Bus::write8(uint16_t addr, uint8_t val){
 
   if (addr >= 0xA000 & addr < 0xC000 & basicEN){ //commented out because its read only
     //BASIC[addr-0xA000] = val;
+    printf("Writing to read-only, basic");
   } 
 
   if (addr >= 0xE000 & addr < 0x10000 & kernalEN){ // same here
     //KERNAL[addr-0xE000] = val;
+    printf("Writing to read-only, kernal");
   }
   
   if (addr >= 0xD000 & addr < 0xE000){ // if 
