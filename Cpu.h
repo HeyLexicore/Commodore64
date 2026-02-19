@@ -64,9 +64,79 @@ class Cpu{
     } P;
 
     Bus* bus;
+
+    typedef void (Cpu::*Exec)(int);
+
+    
+    Exec opcodeExecution[56];
+    void initExec();
     
     int opcodeCode[256],opcodeMode[256];
     std::string opcodeMnem[256];
+
+    void setNZ(uint8_t);
+    void jumpRelative(bool);
+     
+    void stackPush(uint8_t);
+    uint8_t stackPull();
+
+    void ADC(int);
+    void AND(int);
+    void ASL(int);
+    void BCC(int);
+    void BCS(int);
+    void BEQ(int);
+    void BIT(int);
+    void BMI(int);
+    void BNE(int);
+    void BPL(int);
+    void BRK(int);
+    void BVC(int);
+    void BVS(int);
+    void CLC(int);
+    void CLD(int);
+    void CLI(int);
+    void CLV(int);
+    void CMP(int);
+    void CPX(int);
+    void CPY(int);
+    void DEC(int);
+    void DEX(int);
+    void DEY(int);
+    void EOR(int);
+    void INC(int);
+    void INX(int);
+    void INY(int);
+    void JMP(int);
+    void JSR(int);
+    void LDA(int);
+    void LDX(int);
+    void LDY(int);
+    void LSR(int);
+    void NOP(int);
+    void ORA(int);
+    void PHA(int);
+    void PHP(int);
+    void PLA(int);
+    void PLP(int);
+    void ROL(int);
+    void ROR(int);
+    void RTI(int);
+    void RTS(int);
+    void SBC(int);
+    void SEC(int);
+    void SED(int);
+    void SEI(int);
+    void STA(int);
+    void STX(int);
+    void STY(int);
+    void TAX(int);
+    void TAY(int);
+    void TSX(int);
+    void TXA(int);
+    void TXS(int);
+    void TYA(int);
+
   public:
     Cpu(){};
     Cpu(Bus*);
