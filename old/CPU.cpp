@@ -63,7 +63,7 @@ void CPU::CLV(){ P.V = 0; }; // $B8
 void CPU::DEX(){ X--; setNZ(X); }; // $CA
 void CPU::DEY(){ Y--; setNZ(Y); }; // $88
 void CPU::INX(){ X++; setNZ(X); }; // $E8
-void CPU::INY(){ Y++; setNZ(Y); }; // $C8
+void CPU::INY(){ Y++; setNZ(Y); }; // $C8 
 void CPU::NOP(){}; // $EA
 void CPU::PHA(){stackPush(A);}; // $48
 void CPU::PHP(){stackPush(P.pack());}; // $08

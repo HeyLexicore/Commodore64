@@ -1,36 +1,61 @@
 #include "Bus.h"
+#include "Cpu.h"
+#include "Vic.h"
+#include "common.h"
 #include <cstdio>
+#include <cstring>
+#include <chrono>
+#include <thread>
 
-
+const int CLOCKSPEED = 1000000; // 1 Mhz
 
 int main (int argc, char *argv[]) {
-  Bus bus;
-  bus.defaults();
   
-  if (argc > 3){
-    printf("Too many args\n");
-    return 1;
-  } else if (argc < 3){
+  if (argc < 3){
     printf("Too little args\n");
     return 1;
-  } else if (argc == 3) {
-    bus.writeKernal(argv[1]);
-    bus.writeBasic(argv[2]);
+  } else if (argc >= 3) {
   }
 
-  bus.write8(0x0010, 0x10);
-  //bus.write8(0xB010, 0x11);
-  bus.write8(0xC010, 0x12);
-  bus.write8(0xD010, 0x13);
-  //bus.write8(0xE010, 0x14);
+  settings set;
+  for (int i = 3; i < argc; i++){
+    if (strcmp(argv[i],"-v")==0) set.printVerbose = true;
+    if (strcmp(argv[i],"-V")==0) {set.printSuperverbose = true; set.printVerbose = true;};
+    if (strcmp(argv[i],"-o")==0) set.printOpcodes = true;
+    if (strcmp(argv[i],"-f")==0) set.fast = true;
+  }
 
-  printf("%02X\n",bus.read8(0x0010));
-  printf("%02X\n",bus.read8(0xB010));
-  printf("%02X\n",bus.read8(0xC010));
-  printf("%02X\n",bus.read8(0xD010));
-  printf("%02X\n",bus.read8(0xE010));
+  Bus bus(set);
+  Vic vic;
+  bus.setupVic(&vic);
+   
+  bus.writeKernal(argv[1]);
+  bus.writeBasic(argv[2]);
 
-  //printf("%i",bus.read8(0xC000));
+  bus.defaults();
+
+ 
+  Cpu cpu(&bus);
+  
+  cpu.setupOpcodes();
+  cpu.setupExecs();
+  cpu.setupReturnVector();
+  auto t0 = std::chrono::high_resolution_clock::now();
+  int cycles = 0; 
+  while(true){
+    if (!set.fast){
+    t0 = std::chrono::high_resolution_clock::now();
+    }
+    
+    cycles = cpu.cycle(set);
+    vic.advance_rasterline(cycles);
+
+    if (!set.fast){
+    auto t1 = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000/CLOCKSPEED) - duration);
+    }
+  }
 
   return 0;
 }

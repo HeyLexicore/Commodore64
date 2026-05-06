@@ -1,4 +1,5 @@
 #include "Bus.h"
+#include "common.h"
 #include <cstdint>
 
 const int opcodeLen[256]{
@@ -69,10 +70,18 @@ class Cpu{
 
     
     Exec opcodeExecution[56];
-    void initExec();
     
     int opcodeCode[256],opcodeMode[256];
     std::string opcodeMnem[256];
+
+    uint8_t valueJK(int);
+    uint16_t addressJK(int);
+    void setJK(int);
+    uint16_t combineJK();
+
+    void advance_PC();
+    uint8_t fetch();
+    void execute(uint8_t);
 
     void setNZ(uint8_t);
     void jumpRelative(bool);
@@ -141,9 +150,9 @@ class Cpu{
     Cpu(){};
     Cpu(Bus*);
 
-    int cycle();
-    uint8_t* addrCallType(int);
-    void setJK();
-    uint16_t combineJK();
+    void setupExecs();
     void setupOpcodes();
+    void setupReturnVector();
+    int cycle(settings);
+
 };
