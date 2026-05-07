@@ -42,6 +42,8 @@ int main (int argc, char *argv[]) {
   cpu.setupOpcodes();
   cpu.setupExecs();
   cpu.setupReturnVector();
+
+
   auto t0 = std::chrono::high_resolution_clock::now();
   int cycles = 0; 
   while(true){

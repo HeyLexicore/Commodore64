@@ -59,18 +59,24 @@ uint8_t& Bus::read8(uint16_t addr){
   
   if (addr >= 0xD000 & addr < 0xE000){ // if 
     if (inoutEN){
-      if (set.printVerbose) printf("Reading MEMIO at address %04X\n",addr);
+
       
       if (addr >= 0xD000 & addr <= 0xD3FF){ // check if address is in vic if it is in texture make it normal ram
+         if (set.printVerbose) printf("Reading VICII at address %04X value %02X\n",addr, vic->read8(addr-0xD000));
 
          return vic->read8(addr-0xD000);
       }
+
+
       
     } else if (charEN){
       if (set.printVerbose) printf("Reading CHARMEM at address %04X\n",addr);
       return  CHAR[addr-0xD000];
     }
+    if (set.printVerbose) printf("Reading MEMRAM at address %04X value %02X\n",addr, RAM[addr]);
+
   }
+
   return RAM[addr];
 };
 uint8_t& Bus::read8_silent(uint16_t addr){
@@ -119,12 +125,12 @@ void Bus::write8(uint16_t addr, uint8_t val){
 
   if (addr >= 0xA000 & addr < 0xC000 & basicEN){ //commented out because its read only
     //BASIC[addr-0xA000] = val;
-    printf("Writing to read-only, basic %04X \n",addr);
+    printf("Writing to read-only, basic %04X val: %02X\n",addr,val);
   } 
 
   if (addr >= 0xE000 & addr < 0x10000 & kernalEN){ // same here
     //KERNAL[addr-0xE000] = val;
-    printf("Writing to read-only, kernal %04X\n",addr);
+    printf("Writing to read-only, kernal %04X val: %02X\n",addr,val);
   }
   
   if (addr >= 0xD000 & addr < 0xE000){ // if 
