@@ -21,7 +21,6 @@
 #define RELATIVE 12
 
 
-
 Cpu::Cpu(Bus* bus): bus(bus) {};
 
 void Cpu::setJK(int m){ // sets the arguments to the opcode byte 2 and byte 3

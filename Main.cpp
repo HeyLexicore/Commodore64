@@ -13,10 +13,12 @@ int main (int argc, char *argv[]) {
   
   if (argc < 3){
     printf("Too little args\n");
+    printf("Usage: <command> <kernal> <basic> [-v Print Verbose] [ -V Print Superverbose ] [ -o Print Opcodes] [ -f Fast ]\n");
     return 1;
   } else if (argc >= 3) {
   }
-
+  
+  
   settings set;
   for (int i = 3; i < argc; i++){
     if (strcmp(argv[i],"-v")==0) set.printVerbose = true;

@@ -1,0 +1,57 @@
+[
+  {
+    "file": "Main.cpp",
+    "arguments": [
+      "/usr/sbin/g++",
+      "Main.cpp",
+      "-o",
+      "out"
+    ],
+    "directory": "/home/lex/projects/Commodore64",
+    "output": "out"
+  },
+  {
+    "file": "Bus.cpp",
+    "arguments": [
+      "/usr/sbin/g++",
+      "Bus.cpp",
+      "-o",
+      "out"
+    ],
+    "directory": "/home/lex/projects/Commodore64",
+    "output": "out"
+  },
+  {
+    "file": "Vic.cpp",
+    "arguments": [
+      "/usr/sbin/g++",
+      "Vic.cpp",
+      "-o",
+      "out"
+    ],
+    "directory": "/home/lex/projects/Commodore64",
+    "output": "out"
+  },
+  {
+    "file": "Cpu.cpp",
+    "arguments": [
+      "/usr/sbin/g++",
+      "Cpu.cpp",
+      "-o",
+      "out"
+    ],
+    "directory": "/home/lex/projects/Commodore64",
+    "output": "out"
+  },
+  {
+    "file": "Opcodes.cpp",
+    "arguments": [
+      "/usr/sbin/g++",
+      "Opcodes.cpp",
+      "-o",
+      "out"
+    ],
+    "directory": "/home/lex/projects/Commodore64",
+    "output": "out"
+  }
+]
